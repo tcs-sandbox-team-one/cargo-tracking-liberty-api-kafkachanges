@@ -1,7 +1,7 @@
 spring:
   
   datasource:
-    url: "jdbc:mysql://mysql-cargo-dev:3306/trackingmsdb?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=EST&useSSL=false"
+    url: "jdbc:mysql://mysql-cargo-dev:3306/trackingmsdb?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=EST&useSSL=false&allowPublicKeyRetrieval=true"
     username: trackingmsdb
     password: trackingmsdb
 
