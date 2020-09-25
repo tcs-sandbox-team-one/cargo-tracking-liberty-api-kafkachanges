@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tracking-db-svc
+  namespace: cargotracker-backend
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: tracking-db
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracking-db
+  namespace: cargotracker-backend
+spec:
+  selector:
+    matchLabels:
+      app: tracking-db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: tracking-db
+    spec:
+      containers:
+      - image: mysql
+        name: trackingdbcontainer
+        env:
+          # Use secret in real usage
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        ports:
+        - containerPort: 3306
+          name: trackingdb
+        volumeMounts:
+        - name: trackingdb-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: trackingdb-persistent-storage
+        persistentVolumeClaim:
+          claimName: trackingdb-pvc-claim
